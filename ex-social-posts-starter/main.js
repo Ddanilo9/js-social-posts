@@ -5,7 +5,7 @@ const posts = [
         media: "https://unsplash.it/600/300?image=171",
         author: {
             name: "Phil Mangione",
-            image: "https://unsplash.it/300/300?image=15"
+            image: "https://unsplash.it/300/300?image=10"
         },
         likes: 80,
         created: "2021-06-25"
@@ -16,7 +16,7 @@ const posts = [
         media: "https://unsplash.it/600/400?image=112",
         author: {
             name: "Sofia Perlari",
-            image: "https://unsplash.it/300/300?image=10"
+            image: "https://unsplash.it/300/300?image=12"
         },
         likes: 120,
         created: "2021-09-03"
@@ -27,7 +27,7 @@ const posts = [
         media: "https://unsplash.it/600/400?image=234",
         author: {
             name: "Chiara Passaro",
-            image: "https://unsplash.it/300/300?image=20"
+            image: "https://unsplash.it/300/300?image=60"
         },
         likes: 78,
         created: "2021-05-15"
@@ -35,7 +35,7 @@ const posts = [
     {
         id: 4,
         content: "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
-        media: "https://unsplash.it/600/400?image=24",
+        media: "https://unsplash.it/600/400?image=84",
         author: {
             name: "Luca Formicola",
             image: null
@@ -49,7 +49,7 @@ const posts = [
         media: "https://unsplash.it/600/400?image=534",
         author: {
             name: "Alessandro Sainato",
-            image: "https://unsplash.it/300/300?image=29"
+            image: "https://unsplash.it/300/300?image=87"
         },
         likes: 95,
         created: "2021-03-05"
@@ -93,3 +93,25 @@ for (let i = 0; i < posts.length; i++){
                                     </div>            
                                 </div>`
 };
+
+let contLinkeDom = document.querySelectorAll('.js-likes-counter');
+
+let arrayId = [];
+
+
+
+
+let likes = document.querySelectorAll('.like-button');
+
+for(let i = 0; i < likes.length; i++){
+    likes[i].addEventListener('click', function(){
+            
+            likes[i].classList.add('color-green');
+            contLinkeDom[i].innerHTML =  `${posts[i].likes + 1}`
+            arrayId.push(posts[i].id);
+        }
+    );
+    console.log(arrayId)
+}
+
+console.log(arrayId)
