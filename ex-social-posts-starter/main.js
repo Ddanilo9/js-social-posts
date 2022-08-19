@@ -61,33 +61,37 @@ let domEl = document.getElementById('container');
 
 
 for (let i = 0; i < posts.length; i++){
+    let post = posts[i]
+    let dataReversed = post.created.split('-').reverse().join('-') //reverse data
+   
+    
     //con il template literal mi creo gli elementi nel dom dopo averli ciclati
     domEl.innerHTML += `<div class="post">
                                     <div class="post__header">
                                         <div class="post-meta">                    
                                             <div class="post-meta__icon">
-                                                <img class="profile-pic" src="${posts[i].author['image']}">                    
+                                                <img class="profile-pic" id="ciao" src="${post.author['image']}">                    
                                             </div>
                                             <div class="post-meta__data">
-                                                <div class="post-meta__author">${posts[i].author['name']}</div>
-                                                <div class="post-meta__time">${posts[i].created}</div>
+                                                <div class="post-meta__author">${post.author['name']}</div>
+                                                <div class="post-meta__time">${dataReversed}</div>
                                             </div>                    
                                         </div>
                                     </div>
-                                    <div class="post__text">${posts[i].content}</div>
+                                    <div class="post__text">${post.content}</div>
                                     <div class="post__image">
-                                        <img src="${posts[i].media}" alt="">
+                                        <img src="${post.media}" alt="">
                                     </div>
                                     <div class="post__footer">
                                         <div class="likes js-likes">
                                             <div class="likes__cta">
-                                                <a class="like-button  js-like-button" href="#" data-postid="${posts[i].id}">
+                                                <a class="like-button  js-like-button" href="#" data-postid="${post.id}">
                                                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                                                     <span class="like-button__label">Mi Piace</span>
                                                 </a>
                                             </div>
                                             <div class="likes__counter">
-                                                Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+                                                Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
                                             </div>
                                         </div> 
                                     </div>            
@@ -95,23 +99,48 @@ for (let i = 0; i < posts.length; i++){
 };
 
 let contLinkeDom = document.querySelectorAll('.js-likes-counter');
-
 let arrayId = [];
-
-
-
-
+miPiace = false
 let likes = document.querySelectorAll('.like-button');
 
+
 for(let i = 0; i < likes.length; i++){
-    likes[i].addEventListener('click', function(){
+    let like = likes[i]
+    // console.log(like)
+    like.addEventListener('click', function(){
+            if(miPiace == false) {
+                like.classList.add('color-green');
+                miPiace = true
+                contLinkeDom[i].innerHTML =  `${posts[i].likes + 1}`
+                if(!arrayId.includes(posts[i].id)){
+                    arrayId.push(posts[i].id);
+                }
+            } else {
+                like.classList.remove('color-green');
+                contLinkeDom[i].innerHTML =  `${posts[i].likes }`
+                miPiace = false
+            }
             
-            likes[i].classList.add('color-green');
-            contLinkeDom[i].innerHTML =  `${posts[i].likes + 1}`
-            arrayId.push(posts[i].id);
         }
     );
-    console.log(arrayId)
+    // console.log(arrayId)
 }
 
 console.log(arrayId)
+
+let postIcon = document.querySelectorAll('.post-meta__icon');
+
+
+postIcon.forEach((el, i) => {
+    // console.log(el)
+    // console.log(i)
+    // console.log(postIcon)
+    if (posts[i].author.image === null) {
+        let iniziali = '';
+        
+        posts[i].author.name.split(' ').forEach(elDue => {
+            iniziali += elDue.charAt().toUpperCase();
+        });
+        el.innerHTML = `<div>${iniziali}</div>`;
+    }
+})
